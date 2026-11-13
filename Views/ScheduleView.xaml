@@ -1,0 +1,136 @@
+﻿<UserControl x:Class="QuanLyHocTap.Views.ScheduleView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="20"/>
+            <ColumnDefinition Width="300"/>
+        </Grid.ColumnDefinitions>
+
+        <DockPanel>
+            <TextBlock DockPanel.Dock="Top" Text="Thời khóa biểu" FontSize="26"
+                       FontWeight="Bold" Margin="0,0,0,16"/>
+
+            <!-- Thanh điều khiển -->
+            <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Margin="0,0,0,12">
+                <RadioButton Content="Tuần" IsChecked="True" GroupName="viewMode" Margin="0,0,12,0" VerticalAlignment="Center"/>
+                <RadioButton Content="Ngày" GroupName="viewMode" Margin="0,0,20,0" VerticalAlignment="Center"/>
+                <Button Content="◀" Width="32" Margin="0,0,4,0"/>
+                <DatePicker x:Name="dpDate" Width="140" Margin="0,0,4,0" VerticalAlignment="Center"/>
+                <Button Content="▶" Width="32"/>
+
+                <!-- Chú thích -->
+                <Border Background="#4F46E5" Width="14" Height="14" CornerRadius="3" Margin="30,0,6,0"/>
+                <TextBlock Text="Trên trường" VerticalAlignment="Center" Margin="0,0,14,0"/>
+                <Border BorderBrush="#4F46E5" BorderThickness="1.5" Background="#EEF2FF"
+                        Width="14" Height="14" CornerRadius="3" Margin="0,0,6,0">
+                    <Border.Resources/>
+                </Border>
+                <TextBlock Text="Tự học" VerticalAlignment="Center"/>
+            </StackPanel>
+
+            <!-- Banner cảnh báo trùng lịch (ẩn mặc định) -->
+            <Border x:Name="bdConflict" DockPanel.Dock="Top" Visibility="Collapsed"
+                    Background="#FEF3C7" BorderBrush="#F59E0B" BorderThickness="1"
+                    CornerRadius="6" Padding="12,8" Margin="0,0,0,12">
+                <TextBlock Text="⚠ Lịch này bị trùng với một lịch khác. Vui lòng kiểm tra lại thời gian."
+                           Foreground="#92400E"/>
+            </Border>
+
+            <!-- Lưới tuần: mỗi cột là một thứ -->
+            <Border Style="{StaticResource Card}" Padding="8">
+                <ItemsControl x:Name="icWeek">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <UniformGrid Rows="1"/>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Border BorderBrush="#E5E7EB" BorderThickness="0,0,1,0" Padding="4,0">
+                                <DockPanel>
+                                    <TextBlock DockPanel.Dock="Top" Text="{Binding DayName}"
+                                               FontWeight="SemiBold" HorizontalAlignment="Center" Margin="0,0,0,8"/>
+                                    <ItemsControl ItemsSource="{Binding Events}">
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate>
+                                                <Border CornerRadius="6" Padding="8" Margin="0,0,0,6"
+                                                        Background="{Binding Background}"
+                                                        BorderBrush="{Binding Accent}" BorderThickness="1.5">
+                                                    <StackPanel>
+                                                        <TextBlock Text="{Binding Subject}" FontWeight="SemiBold"
+                                                                   Foreground="{Binding Foreground}" TextWrapping="Wrap"/>
+                                                        <TextBlock Text="{Binding TimeRange}" FontSize="11"
+                                                                   Foreground="{Binding Foreground}"/>
+                                                        <TextBlock Text="{Binding Kind}" FontSize="11"
+                                                                   Foreground="{Binding Foreground}" Opacity="0.8"/>
+                                                    </StackPanel>
+                                                </Border>
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                    </ItemsControl>
+                                </DockPanel>
+                            </Border>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </Border>
+        </DockPanel>
+
+        <!-- Form lịch học -->
+        <Border Grid.Column="2" Style="{StaticResource Card}" VerticalAlignment="Top">
+            <StackPanel>
+                <TextBlock Text="Thông tin lịch" FontSize="16" FontWeight="SemiBold" Margin="0,0,0,14"/>
+
+                <TextBlock Text="Môn học" Style="{StaticResource FieldLabel}"/>
+                <ComboBox SelectedIndex="0">
+                    <ComboBoxItem Content="Nhập môn lập trình"/>
+                    <ComboBoxItem Content="Đại số tuyến tính"/>
+                </ComboBox>
+
+                <TextBlock Text="Loại lịch" Style="{StaticResource FieldLabel}"/>
+                <ComboBox SelectedIndex="0">
+                    <ComboBoxItem Content="Học trên trường"/>
+                    <ComboBoxItem Content="Tự học"/>
+                </ComboBox>
+
+                <TextBlock Text="Thứ" Style="{StaticResource FieldLabel}"/>
+                <ComboBox SelectedIndex="0">
+                    <ComboBoxItem Content="Thứ 2"/>
+                    <ComboBoxItem Content="Thứ 3"/>
+                    <ComboBoxItem Content="Thứ 4"/>
+                    <ComboBoxItem Content="Thứ 5"/>
+                    <ComboBoxItem Content="Thứ 6"/>
+                    <ComboBoxItem Content="Thứ 7"/>
+                    <ComboBoxItem Content="Chủ nhật"/>
+                </ComboBox>
+
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition Width="10"/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <StackPanel>
+                        <TextBlock Text="Bắt đầu" Style="{StaticResource FieldLabel}"/>
+                        <TextBox Text="07:30"/>
+                    </StackPanel>
+                    <StackPanel Grid.Column="2">
+                        <TextBlock Text="Kết thúc" Style="{StaticResource FieldLabel}"/>
+                        <TextBox Text="09:30"/>
+                    </StackPanel>
+                </Grid>
+
+                <TextBlock Text="Phòng / Ghi chú" Style="{StaticResource FieldLabel}"/>
+                <TextBox/>
+
+                <UniformGrid Columns="3" Margin="0,6,0,0">
+                    <Button Content="Thêm" Style="{StaticResource PrimaryButton}" Margin="0,0,4,0"/>
+                    <Button Content="Sửa" Style="{StaticResource PrimaryButton}" Margin="2,0"/>
+                    <Button Content="Xóa" Style="{StaticResource DangerButton}" Margin="4,0,0,0"/>
+                </UniformGrid>
+            </StackPanel>
+        </Border>
+    </Grid>
+</UserControl>

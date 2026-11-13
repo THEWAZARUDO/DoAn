@@ -1,0 +1,85 @@
+﻿<UserControl x:Class="QuanLyHocTap.Views.SubjectsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="20"/>
+            <ColumnDefinition Width="320"/>
+        </Grid.ColumnDefinitions>
+
+        <!-- Danh sách -->
+        <DockPanel>
+            <TextBlock DockPanel.Dock="Top" Text="Môn học" FontSize="26" FontWeight="Bold" Margin="0,0,0,16"/>
+
+            <Grid DockPanel.Dock="Top" Margin="0,0,0,12">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <TextBox x:Name="txtSearch" Margin="0" ToolTip="Tìm theo tên hoặc mã môn"/>
+                <Button Grid.Column="1" Content="🔍 Tìm" Margin="8,0,0,0"
+                        Style="{StaticResource PrimaryButton}"/>
+            </Grid>
+
+            <Border Style="{StaticResource Card}" Padding="0">
+                <DataGrid x:Name="dgSubjects" AutoGenerateColumns="False" IsReadOnly="True"
+                          HeadersVisibility="Column" GridLinesVisibility="Horizontal"
+                          BorderThickness="0" RowHeight="40" Background="White"
+                          SelectionMode="Single" CanUserAddRows="False">
+                    <DataGrid.Columns>
+                        <DataGridTemplateColumn Header="" Width="40">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Ellipse Width="16" Height="16" Fill="{Binding Color}"
+                                             HorizontalAlignment="Center"/>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                        <DataGridTextColumn Header="Mã môn" Binding="{Binding Code}" Width="100"/>
+                        <DataGridTextColumn Header="Tên môn" Binding="{Binding Name}" Width="*"/>
+                        <DataGridTextColumn Header="Tín chỉ" Binding="{Binding Credits}" Width="70"/>
+                        <DataGridTextColumn Header="Giảng viên" Binding="{Binding Lecturer}" Width="160"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </Border>
+        </DockPanel>
+
+        <!-- Form thêm/sửa -->
+        <Border Grid.Column="2" Style="{StaticResource Card}" VerticalAlignment="Top">
+            <StackPanel>
+                <TextBlock Text="Thông tin môn học" FontSize="16" FontWeight="SemiBold" Margin="0,0,0,14"/>
+
+                <TextBlock Text="Tên môn" Style="{StaticResource FieldLabel}"/>
+                <TextBox x:Name="txtName"/>
+
+                <TextBlock Text="Mã môn" Style="{StaticResource FieldLabel}"/>
+                <TextBox x:Name="txtCode"/>
+
+                <TextBlock Text="Số tín chỉ" Style="{StaticResource FieldLabel}"/>
+                <TextBox x:Name="txtCredits"/>
+
+                <TextBlock Text="Giảng viên" Style="{StaticResource FieldLabel}"/>
+                <TextBox x:Name="txtLecturer"/>
+
+                <TextBlock Text="Màu đại diện" Style="{StaticResource FieldLabel}"/>
+                <ComboBox x:Name="cbColor">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <Ellipse Width="14" Height="14" Fill="{Binding Brush}" Margin="0,0,8,0"/>
+                                <TextBlock Text="{Binding Name}"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+
+                <UniformGrid Columns="3" Margin="0,6,0,0">
+                    <Button Content="Thêm" Style="{StaticResource PrimaryButton}" Margin="0,0,4,0"/>
+                    <Button Content="Sửa" Style="{StaticResource PrimaryButton}" Margin="2,0"/>
+                    <Button Content="Xóa" Style="{StaticResource DangerButton}" Margin="4,0,0,0"/>
+                </UniformGrid>
+            </StackPanel>
+        </Border>
+    </Grid>
+</UserControl>
