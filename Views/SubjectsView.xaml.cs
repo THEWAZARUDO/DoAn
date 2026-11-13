@@ -1,7 +1,7 @@
 ﻿using System.Windows.Controls;
 using System.Windows.Media;
 
-namespace QuanLyHocTap.Views
+namespace DoAn.Views
 {
     public class SubjectDemo
     {

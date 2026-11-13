@@ -2,7 +2,7 @@
 using System.Windows.Controls;
 using System.Windows.Media;
 
-namespace QuanLyHocTap.Views
+namespace DoAn.Views
 {
     public class TaskDemo
     {
@@ -29,6 +29,11 @@ namespace QuanLyHocTap.Views
                 new TaskDemo { Title="Báo cáo nhóm", Subject="Cấu trúc dữ liệu", Deadline=DateTime.Today.AddDays(14),
                                Priority="Thấp", PriorityBrush=Brushes.SeaGreen, Status="Hoàn thành" },
             };
+        }
+
+        private void cbFilterSubject_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
         }
     }
 }
